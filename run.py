@@ -46,6 +46,8 @@ def display_menu():
     main_menu = ["( 1 ) ADD INVENTORY", "( 2 ) REMOVE INVENTORY", "( 3 ) EDIT INVENTORY", "( 4 ) QUIT"]
     menu_loop = True
     while menu_loop:
+
+        print('              ________ MAIN MENU ________\n')
         selected_option = main_menu[TerminalMenu(main_menu).show()]
 
         if selected_option == "( 1 ) ADD INVENTORY":
