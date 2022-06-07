@@ -1,8 +1,6 @@
 """
 Write your code to expect a terminal of 80 characters wide and 24 rows high
-
-The creation of a command-line interface application to assist the day-to-day
-operations of a car dealership
+Accessing our automated_autos google sheet for data handling and manipulation
 """
 
 import gspread
@@ -35,3 +33,14 @@ def display_homepage():
     print(fig_font.renderText('Automated\nAuto Dealer\n'))
     print('------ Inventory Management Tool For Auto Traders ------')
     print('--------------- Created By RyanONeill416 ---------------')
+
+
+def main():
+    """
+    Commences the running of the application
+    Runs all functions of the program
+    """
+    display_homepage()
+
+
+main()
