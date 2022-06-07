@@ -1,11 +1,13 @@
 """
 Write your code to expect a terminal of 80 characters wide and 24 rows high
 Accessing our automated_autos google sheet for data handling and manipulation
+Utilising figlet to use ASCI fonts for the application
 """
 
 import gspread
 from google.oauth2.service_account import Credentials
 from pyfiglet import Figlet
+from simple_term_menu import TerminalMenu
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -32,7 +34,11 @@ def display_homepage():
     fig_font = Figlet(font='slant')
     print(fig_font.renderText('Automated\nAuto Dealer\n'))
     print('------ Inventory Management Tool For Auto Traders ------')
-    print('--------------- Created By RyanONeill416 ---------------')
+    print('--------------- Created By RyanONeill416 ---------------\n\n')
+
+
+# def display_menu():
+
 
 
 def main():
@@ -44,3 +50,4 @@ def main():
 
 
 main()
+
