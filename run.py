@@ -37,8 +37,25 @@ def display_homepage():
     print('--------------- Created By RyanONeill416 ---------------\n\n')
 
 
-# def display_menu():
+def display_menu():
+    """
+    Displays the user selection menu
+    Provides the user with clear declarations for available functionality
+    Displayed continuously until the user selects to quit
+    """
+    main_menu = ["( 1 ) ADD INVENTORY", "( 2 ) REMOVE INVENTORY", "( 3 ) EDIT INVENTORY", "( 4 ) QUIT"]
+    menu_loop = True
+    while menu_loop:
+        selected_option = main_menu[TerminalMenu(main_menu).show()]
 
+        if selected_option == "( 1 ) ADD INVENTORY":
+            print(f"You selected {selected_option}\n")
+        elif selected_option == "( 2 ) REMOVE INVENTORY":
+            print(f"You selected {selected_option}\n")
+        elif selected_option == "( 3 ) EDIT INVENTORY":
+            print(f"You selected {selected_option}\n")
+        elif selected_option == "( 4 ) QUIT":
+            menu_loop = False
 
 
 def main():
@@ -47,7 +64,7 @@ def main():
     Runs all functions of the program
     """
     display_homepage()
+    display_menu()
 
 
 main()
-
