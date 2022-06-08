@@ -68,16 +68,37 @@ def add_inventory():
     Ensures data input from the user is valid
     """
     new_inventory = []
+    print("Enter the following data to add a vehicle to your inventory.\n")
 
-    add_reg = input("Enter vehicle registration:\n")
-    if len(add_reg) < 4:
-        print("Value must be 4 or more characters to be valid.\n")
-    elif (add_reg.isalpha() is True) or (add_reg.isnumeric() is True):
-        print("Value must be alphanumeric to be valid.\n")
-    elif add_reg.isalnum() is False:
-        print("Value must be alphanumeric to be valid.\n")
-    else:
-        new_inventory.append(add_reg)
+    def add_registration():
+        add_reg = input("Enter vehicle registration:\n\n")
+
+        if len(add_reg) < 4:
+            print("Value must be 4 or more characters to be valid.\n\n")
+        elif (add_reg.isalpha() is True) or (add_reg.isnumeric() is True):
+            print("Value must be alphanumeric to be valid.\n\n")
+        elif add_reg.isalnum() is False:
+            print("Value must be alphanumeric to be valid.\n\n")
+        else:
+            new_inventory.append(add_reg)
+            print(new_inventory)
+            add_make_model()
+
+    def add_make_model():
+        add_make = input("\nEnter vehicle make (e.g Volkswagen):\n\n")
+        add_model = input("\nEnter vehicle model (e.g Golf):\n\n")
+
+        if add_make.isalpha() is False:
+            print("Car make value must be alphabetical e.g BMW.\n\n")
+        else:
+            new_inventory.append(add_make)
+
+        if add_model.isalnum() is False:
+            print("Car model value must be alphanumeric e.g 440i, M3\n\n")
+        else:
+            new_inventory.append(add_model)
+
+    add_registration()
 
 
 def main():
