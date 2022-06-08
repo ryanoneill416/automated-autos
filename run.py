@@ -43,7 +43,8 @@ def display_menu():
     Provides the user with clear declarations for available functionality
     Displayed continuously until the user selects to quit
     """
-    main_menu = ["( 1 ) ADD INVENTORY", "( 2 ) REMOVE INVENTORY", "( 3 ) EDIT INVENTORY", "( 4 ) QUIT"]
+    main_menu = ["( 1 ) ADD INVENTORY", "( 2 ) REMOVE INVENTORY",
+                 "( 3 ) EDIT INVENTORY", "( 4 ) QUIT"]
     menu_loop = True
     while menu_loop:
 
@@ -52,12 +53,31 @@ def display_menu():
 
         if selected_option == "( 1 ) ADD INVENTORY":
             print(f"You selected {selected_option}\n")
+            add_inventory()
         elif selected_option == "( 2 ) REMOVE INVENTORY":
             print(f"You selected {selected_option}\n")
         elif selected_option == "( 3 ) EDIT INVENTORY":
             print(f"You selected {selected_option}\n")
         elif selected_option == "( 4 ) QUIT":
             menu_loop = False
+
+
+def add_inventory():
+    """
+    Adds a new vehicle to the inventory list for the dealership
+    Ensures data input from the user is valid
+    """
+    new_inventory = []
+
+    add_reg = input("Enter vehicle registration:\n")
+    if len(add_reg) < 4:
+        print("Value must be 4 or more characters to be valid.\n")
+    elif (add_reg.isalpha() is True) or (add_reg.isnumeric() is True):
+        print("Value must be alphanumeric to be valid.\n")
+    elif add_reg.isalnum() is False:
+        print("Value must be alphanumeric to be valid.\n")
+    else:
+        new_inventory.append(add_reg)
 
 
 def main():
