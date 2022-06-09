@@ -133,12 +133,24 @@ def add_inventory():
             print("Value entered is not profitable, must be at least 1000")
         else:
             new_inventory.append(add_price)
-            print(f"\nAdd {new_inventory} to current inventory?\n")
+            print(f"\nAdd {new_inventory} to current inventory?\n\n")
             selected_add_menu = add_menu[TerminalMenu(add_menu).show()]
             if selected_add_menu == "(1) YES":
-                print("Adding to inventory...")
+                update_worksheet(new_inventory, "inventory")
 
     add_registration()
+
+
+def update_worksheet(data, worksheet):
+    """
+    Retrieves a list of data and a worksheet for the data to be appended to
+    Updates the current worksheet with provided data
+    """
+
+    print(f"Updating {worksheet} worksheet...")
+    worksheet_to_append = SHEET.worksheet(worksheet)
+    worksheet_to_append.append_row(data)
+    print(f"{worksheet} worksheet updated successfully :)\n\n")
 
 
 def main():
