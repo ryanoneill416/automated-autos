@@ -47,8 +47,6 @@ def display_menu():
     """
     main_menu = ["(1) ADD INVENTORY", "(2) REMOVE INVENTORY",
                  "(3) EDIT INVENTORY", "(4) QUIT"]
-    # append_menu = ["(1) YES", "(2) NO"]
-    
 
     menu_loop = True
     while menu_loop:
@@ -99,13 +97,14 @@ def add_inventory():
         if add_make.isalpha() is False:
             print("\nOperation cancelled:")
             print("Car make value must be alphabetical e.g BMW.\n\n")
+        elif len(add_make) < 2:
+            print("\nOperation cancelled:")
+            print("Car make value must be > 1 character long e.g. KIA\n\n")
         else:
             add_make = add_make.capitalize()
             new_inventory.append(add_make)
             print(new_inventory)
             add_car__model()
-
-
 
     def add_car__model():
         add_model = input("\n[3] Enter vehicle model (e.g Golf):\n\n")
@@ -122,9 +121,9 @@ def add_inventory():
             print(new_inventory)
             add_car_price()
 
-
     def add_car_price():
         add_price = input("\n[4] Enter vehicle sale price in euro:\n\n")
+        add_menu = ["(1) YES", "(2) NO"]
 
         if add_price.isnumeric() is False:
             print("\nOperation cancelled:")
@@ -134,7 +133,10 @@ def add_inventory():
             print("Value entered is not profitable, must be at least 1000")
         else:
             new_inventory.append(add_price)
-            print(f"\nAdd these values to current inventory {new_inventory}?")
+            print(f"\nAdd {new_inventory} to current inventory?\n")
+            selected_add_menu = add_menu[TerminalMenu(add_menu).show()]
+            if selected_add_menu == "(1) YES":
+                print("Adding to inventory...")
 
     add_registration()
 
