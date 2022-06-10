@@ -22,6 +22,7 @@ SHEET = GSPREAD_CLIENT.open('automated_autos')
 
 inventory = SHEET.worksheet('inventory')
 sales = SHEET.worksheet('sales')
+add_menu = ["(1) YES", "(2) NO"]
 
 
 def display_homepage():
@@ -45,7 +46,7 @@ def display_menu():
     Displays secondary user selection menus to confirm data
     that will be added to spreadsheet
     """
-    main_menu = ["(1) ADD INVENTORY", "(2) REGISTER INVENTORY SALE",
+    main_menu = ["(1) ADD INVENTORY", "(2) REGISTER VEHICLE SALE",
                  "(3) EDIT INVENTORY", "(4) QUIT"]
 
     menu_loop = True
@@ -57,7 +58,7 @@ def display_menu():
         if selected_main_menu == "(1) ADD INVENTORY":
             print(f"You selected {selected_main_menu}\n")
             add_inventory()
-        elif selected_main_menu == "(2) REGISTER INVENTORY SALE":
+        elif selected_main_menu == "(2) REGISTER VEHICLE SALE":
             print(f"You selected {selected_main_menu}\n")
             add_sale()
         elif selected_main_menu == "(3) EDIT INVENTORY":
@@ -75,6 +76,10 @@ def add_inventory():
     print("Enter the following data to add a vehicle to your inventory.\n")
 
     def add_registration():
+        """
+        Retrieves the registration number of new inventory from user
+        Validates the information before appending to empty list
+        """
         add_reg = input("[1] Enter vehicle registration:\n\n")
 
         if len(add_reg) < 4:
@@ -93,6 +98,10 @@ def add_inventory():
             add_car_make()
 
     def add_car_make():
+        """
+        Retrieves the car make of new inventory from user
+        Validates the information before appending to empty list
+        """
         add_make = input("\n[2] Enter vehicle make (e.g Volkswagen):\n\n")
 
         if add_make.isalpha() is False:
@@ -108,6 +117,10 @@ def add_inventory():
             add_car__model()
 
     def add_car__model():
+        """
+        Retrieves the model of new inventory from user
+        Validates the information before appending to empty list
+        """
         add_model = input("\n[3] Enter vehicle model (e.g Golf):\n\n")
 
         if add_model.isalnum() is False:
@@ -123,8 +136,12 @@ def add_inventory():
             add_car_price()
 
     def add_car_price():
+        """
+        Retrieves starting sale price of new inventory from user
+        Validates the information before appending to empty list
+        Presents total inputted data as a list and prompts for confirmation
+        """
         add_price = input("\n[4] Enter vehicle sale price in euro:\n\n")
-        add_menu = ["(1) YES", "(2) NO"]
 
         if add_price.isnumeric() is False:
             print("\nOperation cancelled:")
@@ -144,13 +161,25 @@ def add_inventory():
 
 def add_sale():
     """
+    Searches for a vehicle in inventory by checking registration
+    Allows user to verify if they want to mark the found vehicle as sold
     Adds a vehicle to the sales worksheet
     Removes that same vehicle from the inventory worksheet
     """
 
     sale_reg = input("\nEnter vehicle registration e.g 12D61460:\n\n").upper()
     check_reg = inventory.find(sale_reg)
-    print(check_reg)
+    if check_reg is None:
+        print("\nOperation cancelled:")
+        print("No vehicle with this registration was found\n\n")
+    else:
+        print("Inventory data found.")
+        print("Register the following vehicle as sold?")
+        print(f"{inventory.row_values(check_reg.row)}\n")
+        selected_add_menu = add_menu[TerminalMenu(add_menu).show()]
+        if selected_add_menu == "(1) YES":
+            update_worksheet(inventory.row_values(check_reg.row), "sales")
+            inventory.delete_rows(check_reg.row)
 
 
 def update_worksheet(data, worksheet):
@@ -162,7 +191,7 @@ def update_worksheet(data, worksheet):
     print(f"Updating {worksheet} worksheet...")
     worksheet_to_append = SHEET.worksheet(worksheet)
     worksheet_to_append.append_row(data)
-    print(f"{worksheet} worksheet updated successfully :)\n\n")
+    print(f"The {worksheet} worksheet has been updated successfully :)\n\n")
 
 
 def main():
@@ -175,8 +204,3 @@ def main():
 
 
 main()
-# check_reg = inventory.find("85D5282")
-# print(check_reg)
-# print(check_reg.row)
-# sales.append_row(inventory.row_values(check_reg.row))
-# inventory.delete_rows(check_reg.row)
