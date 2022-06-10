@@ -140,6 +140,7 @@ def add_inventory():
         Retrieves starting sale price of new inventory from user
         Validates the information before appending to empty list
         Presents total inputted data as a list and prompts for confirmation
+        If user is happy with data, the list is added to inventory
         """
         add_price = input("\n[4] Enter vehicle sale price in euro:\n\n")
 
