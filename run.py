@@ -45,7 +45,7 @@ def display_menu():
     Displays secondary user selection menus to confirm data
     that will be added to spreadsheet
     """
-    main_menu = ["(1) ADD INVENTORY", "(2) REMOVE INVENTORY",
+    main_menu = ["(1) ADD INVENTORY", "(2) REGISTER INVENTORY SALE",
                  "(3) EDIT INVENTORY", "(4) QUIT"]
 
     menu_loop = True
@@ -57,8 +57,9 @@ def display_menu():
         if selected_main_menu == "(1) ADD INVENTORY":
             print(f"You selected {selected_main_menu}\n")
             add_inventory()
-        elif selected_main_menu == "(2) REMOVE INVENTORY":
+        elif selected_main_menu == "(2) REGISTER INVENTORY SALE":
             print(f"You selected {selected_main_menu}\n")
+            add_sale()
         elif selected_main_menu == "(3) EDIT INVENTORY":
             print(f"You selected {selected_main_menu}\n")
         elif selected_main_menu == "(4) QUIT":
@@ -141,6 +142,17 @@ def add_inventory():
     add_registration()
 
 
+def add_sale():
+    """
+    Adds a vehicle to the sales worksheet
+    Removes that same vehicle from the inventory worksheet
+    """
+
+    sale_reg = input("\nEnter vehicle registration e.g 12D61460:\n\n").upper()
+    check_reg = inventory.find(sale_reg)
+    print(check_reg)
+
+
 def update_worksheet(data, worksheet):
     """
     Retrieves a list of data and a worksheet for the data to be appended to
@@ -163,3 +175,8 @@ def main():
 
 
 main()
+# check_reg = inventory.find("85D5282")
+# print(check_reg)
+# print(check_reg.row)
+# sales.append_row(inventory.row_values(check_reg.row))
+# inventory.delete_rows(check_reg.row)
