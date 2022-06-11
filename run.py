@@ -35,7 +35,7 @@ def display_homepage():
     fig_font = Figlet(font='slant')
     print(fig_font.renderText('Automated\nAuto Dealer\n'))
     print('------ Inventory Management Tool For Auto Traders ------')
-    print('--------------- Created By RyanONeill416 ---------------\n\n')
+    print('--------------- Created By RyanONeill416 ---------------\n')
 
 
 def display_menu():
@@ -168,7 +168,7 @@ def add_sale():
     Removes that same vehicle from the inventory worksheet
     """
 
-    sale_reg = input("\nEnter vehicle registration e.g 12D61460:\n\n").upper()
+    sale_reg = input("Enter vehicle registration e.g 12D61460:\n\n").upper()
     check_reg = inventory.find(sale_reg)
     if check_reg is None:
         print("\nOperation cancelled:")
