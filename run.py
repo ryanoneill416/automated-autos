@@ -54,7 +54,7 @@ def display_menu():
 
         print('              ________ MAIN MENU ________\n')
         selected_main_menu = main_menu[TerminalMenu(main_menu).show()]
-        print("")
+        print()
 
         if selected_main_menu == "(1) ADD INVENTORY":
             print(f"You selected {selected_main_menu}\n")
@@ -145,10 +145,10 @@ def add_inventory():
 
         if add_price.isnumeric() is False:
             print("\nOperation cancelled:")
-            print("Vehicle price value must be numeric to be valid e.g. 5000.")
+            print("Vehicle price value must be numeric to be valid e.g. 5000.\n\n")
         elif len(add_price) < 4:
             print("\nOperation cancelled:")
-            print("Value entered is not profitable, must be at least 1000.")
+            print("Value entered is not profitable, must be at least 1000.\n\n")
         else:
             new_inventory.append(add_price)
             print(f"\nAdd {new_inventory} to current inventory?\n\n")
@@ -184,8 +184,15 @@ def add_sale():
 
 
 def edit_inventory():
+    """
+    Searches for a vehicle in inventory by checking registration
+    Allows user to verify the correct vehicle was inputted
+    Gives user selection of what they wish to edit about the inventory selected
+    """
     inv_reg = input("Enter vehicle registration e.g. 12A3456:\n\n").upper()
     check_reg = inventory.find(inv_reg)
+    edit_menu = ["(1) EDIT PRICE", "(2) DEPOSIT TAKEN",
+                 "(3) DEPOSIT RESCINDED", "(4) BACK TO MENU"]
 
     if check_reg is None:
         print("\nOperation cancelled:")
@@ -196,7 +203,25 @@ def edit_inventory():
         print(f"{inventory.row_values(check_reg.row)}\n")
         selected_add_menu = add_menu[TerminalMenu(add_menu).show()]
         if selected_add_menu == "(1) YES":
-            print("bueno")
+            selected_edit_menu = edit_menu[TerminalMenu(edit_menu).show()]
+            if selected_edit_menu == "(1) EDIT PRICE":
+                add_price = input("\nEnter new vehicle sale price:\n\n")
+
+                if add_price.isnumeric() is False:
+                    print("\nOperation cancelled:")
+                    print("Vehicle price value must be numeric to be valid e.g. 5000.\n\n")
+                elif len(add_price) < 4:
+                    print("\nOperation cancelled:")
+                    print("Value entered is not profitable, must be at least 1000.\n\n")
+                else:
+                    print("Editing price...")
+                    inventory.update_cell(check_reg.row, 4, add_price)
+                    print("Vehicle price has been updated successfully.\n\n")
+
+            elif selected_edit_menu == "(2) DEPOSIT TAKEN":
+                print("Adding deposit to selected vehicle...")
+            elif selected_edit_menu == "(3) DEPOSIT RESCINDED":
+                print("Removing deposit from selected vehicle...")
 
 
 def update_worksheet(data, worksheet):
@@ -204,11 +229,10 @@ def update_worksheet(data, worksheet):
     Retrieves a list of data and a worksheet for the data to be appended to
     Updates the current worksheet with provided data
     """
-
     print(f"Updating {worksheet} worksheet...")
     worksheet_to_append = SHEET.worksheet(worksheet)
     worksheet_to_append.append_row(data)
-    print(f"The {worksheet} worksheet has been updated successfully :)\n\n")
+    print(f"The {worksheet} worksheet has been updated successfully.\n\n")
 
 
 def main():
