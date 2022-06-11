@@ -54,6 +54,7 @@ def display_menu():
 
         print('              ________ MAIN MENU ________\n')
         selected_main_menu = main_menu[TerminalMenu(main_menu).show()]
+        print("")
 
         if selected_main_menu == "(1) ADD INVENTORY":
             print(f"You selected {selected_main_menu}\n")
@@ -63,6 +64,7 @@ def display_menu():
             add_sale()
         elif selected_main_menu == "(3) EDIT INVENTORY":
             print(f"You selected {selected_main_menu}\n")
+            edit_inventory()
         elif selected_main_menu == "(4) QUIT":
             menu_loop = False
 
@@ -94,7 +96,6 @@ def add_inventory():
         else:
             add_reg = add_reg.upper()
             new_inventory.append(add_reg)
-            print(new_inventory)
             add_car_make()
 
     def add_car_make():
@@ -109,11 +110,10 @@ def add_inventory():
             print("Car make value must be alphabetical e.g BMW.\n\n")
         elif len(add_make) < 2:
             print("\nOperation cancelled:")
-            print("Car make value must be > 1 character long e.g. KIA\n\n")
+            print("Car make value must be > 1 character long e.g. KIA.\n\n")
         else:
             add_make = add_make.capitalize()
             new_inventory.append(add_make)
-            print(new_inventory)
             add_car__model()
 
     def add_car__model():
@@ -125,14 +125,13 @@ def add_inventory():
 
         if add_model.isalnum() is False:
             print("\nOperation cancelled:")
-            print("Car model value must be alphanumeric e.g 440i, M3\n\n")
+            print("Car model value must be alphanumeric e.g 440i, M3.\n\n")
         elif len(add_model) < 2:
             print("\nOperation cancelled:")
-            print("Car model value must be > 1 character long e.g M3\n\n")
+            print("Car model value must be > 1 character long e.g M3.\n\n")
         else:
             add_model = add_model.capitalize()
             new_inventory.append(add_model)
-            print(new_inventory)
             add_car_price()
 
     def add_car_price():
@@ -149,7 +148,7 @@ def add_inventory():
             print("Vehicle price value must be numeric to be valid e.g. 5000.")
         elif len(add_price) < 4:
             print("\nOperation cancelled:")
-            print("Value entered is not profitable, must be at least 1000")
+            print("Value entered is not profitable, must be at least 1000.")
         else:
             new_inventory.append(add_price)
             print(f"\nAdd {new_inventory} to current inventory?\n\n")
@@ -170,17 +169,34 @@ def add_sale():
 
     sale_reg = input("Enter vehicle registration e.g 12D61460:\n\n").upper()
     check_reg = inventory.find(sale_reg)
+
     if check_reg is None:
         print("\nOperation cancelled:")
-        print("No vehicle with this registration was found\n\n")
+        print("No vehicle with this registration was found.\n\n")
     else:
-        print("Inventory data found.")
+        print("\nInventory data found:")
         print("Register the following vehicle as sold?")
         print(f"{inventory.row_values(check_reg.row)}\n")
         selected_add_menu = add_menu[TerminalMenu(add_menu).show()]
         if selected_add_menu == "(1) YES":
             update_worksheet(inventory.row_values(check_reg.row), "sales")
             inventory.delete_rows(check_reg.row)
+
+
+def edit_inventory():
+    inv_reg = input("Enter vehicle registration e.g. 12A3456:\n\n").upper()
+    check_reg = inventory.find(inv_reg)
+
+    if check_reg is None:
+        print("\nOperation cancelled:")
+        print("No vehicle with this registration was found in inventory.\n\n")
+    else:
+        print("\nInventory data found:")
+        print("Edit the following vehicle?")
+        print(f"{inventory.row_values(check_reg.row)}\n")
+        selected_add_menu = add_menu[TerminalMenu(add_menu).show()]
+        if selected_add_menu == "(1) YES":
+            print("bueno")
 
 
 def update_worksheet(data, worksheet):
