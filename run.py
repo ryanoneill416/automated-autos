@@ -188,6 +188,7 @@ def edit_inventory():
     Searches for a vehicle in inventory by checking registration
     Allows user to verify the correct vehicle was inputted
     Gives user selection of what they wish to edit about the inventory selected
+    Each option contains value validation and double-checking before completion
     """
     inv_reg = input("Enter vehicle registration e.g. 12A3456:\n\n").upper()
     check_reg = inventory.find(inv_reg)
@@ -232,7 +233,14 @@ def edit_inventory():
                     inventory.update_cell(check_reg.row, 5, add_deposit)
                     print("Deposit amount updated successfully.\n\n")
             elif selected_edit_menu == "(3) DEPOSIT RESCINDED":
-                print("Removing deposit from selected vehicle...")
+                print("Remove deposit taken from the selected vehicle?")
+                selected_add_menu = add_menu[TerminalMenu(add_menu).show()]
+                if selected_add_menu == "(1) YES":
+                    print("Removing deposit from selected vehicle?\n\n")
+                    inventory.update_cell(check_reg.row, 5, "")
+                    print("Deposit has been removed successfully.\n\n")
+                else:
+                    print("")
 
 
 def update_worksheet(data, worksheet):
@@ -256,4 +264,3 @@ def main():
 
 
 main()
-
