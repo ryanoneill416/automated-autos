@@ -209,7 +209,7 @@ def edit_inventory():
 
                 if add_price.isnumeric() is False:
                     print("\nOperation cancelled:")
-                    print("Vehicle price value must be numeric to be valid e.g. 5000.\n\n")
+                    print("Vehicle price value must be numeric to be valid.\n\n")
                 elif len(add_price) < 4:
                     print("\nOperation cancelled:")
                     print("Value entered is not profitable, must be at least 1000.\n\n")
@@ -219,7 +219,18 @@ def edit_inventory():
                     print("Vehicle price has been updated successfully.\n\n")
 
             elif selected_edit_menu == "(2) DEPOSIT TAKEN":
-                print("Adding deposit to selected vehicle...")
+                add_deposit = input("\n[4] Enter deposit amount paid:\n\n")
+
+                if add_deposit.isnumeric() is False:
+                    print("\nOperation cancelled:")
+                    print("Value must be numeric to be valid e.g 500.\n\n")
+                elif int(add_deposit) < 500:
+                    print("\nOperation cancelled:")
+                    print("Value must be at least 500 to be valid.\n\n")
+                else:
+                    print("Adding deposit to selected vehicle...")
+                    inventory.update_cell(check_reg.row, 5, add_deposit)
+                    print("Deposit amount updated successfully.\n\n")
             elif selected_edit_menu == "(3) DEPOSIT RESCINDED":
                 print("Removing deposit from selected vehicle...")
 
@@ -245,3 +256,4 @@ def main():
 
 
 main()
+
