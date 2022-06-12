@@ -46,26 +46,26 @@ def display_menu():
     Displays secondary user selection menus to confirm data
     that will be added to spreadsheet
     """
-    main_menu = ["(1) ADD INVENTORY", "(2) REGISTER VEHICLE SALE",
-                 "(3) EDIT INVENTORY", "(4) QUIT"]
+    main_menu = ["[1] ADD INVENTORY", "[2] REGISTER VEHICLE SALE",
+                 "[3] EDIT INVENTORY", "[4] QUIT"]
 
     menu_loop = True
     while menu_loop:
 
         print('              ________ MAIN MENU ________\n')
         selected_main_menu = main_menu[TerminalMenu(main_menu).show()]
-        print()
+        print("")
 
-        if selected_main_menu == "(1) ADD INVENTORY":
+        if selected_main_menu == "[1] ADD INVENTORY":
             print(f"You selected {selected_main_menu}\n")
             add_inventory()
-        elif selected_main_menu == "(2) REGISTER VEHICLE SALE":
+        elif selected_main_menu == "[2] REGISTER VEHICLE SALE":
             print(f"You selected {selected_main_menu}\n")
             add_sale()
-        elif selected_main_menu == "(3) EDIT INVENTORY":
+        elif selected_main_menu == "[3] EDIT INVENTORY":
             print(f"You selected {selected_main_menu}\n")
             edit_inventory()
-        elif selected_main_menu == "(4) QUIT":
+        elif selected_main_menu == "[4] QUIT":
             menu_loop = False
 
 
