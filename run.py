@@ -22,7 +22,7 @@ SHEET = GSPREAD_CLIENT.open('automated_autos')
 
 inventory = SHEET.worksheet('inventory')
 sales = SHEET.worksheet('sales')
-add_menu = ["(1) YES", "(2) NO"]
+add_menu = ["[1] YES", "[2] NO"]
 
 
 def display_homepage():
@@ -71,11 +71,13 @@ def display_menu():
 
 def add_inventory():
     """
+    Allows user to enter vehicle data for new inventory acquired
     Adds a new vehicle to the inventory list for the dealership
     Ensures data input from the user is valid
     """
     new_inventory = []
-    print("Enter the following data to add a vehicle to your inventory.\n")
+    print("Enter the following data to add a vehicle to your inventory.")
+    print("Enter Q to go back to the main menu.\n")
 
     def add_registration():
         """
@@ -84,7 +86,9 @@ def add_inventory():
         """
         add_reg = input("[1] Enter vehicle registration:\n\n")
 
-        if len(add_reg) < 4:
+        if len(add_reg) == 1:
+            print("\nOperation cancelled.\n\n")
+        elif len(add_reg) < 4:
             print("\nOperation cancelled:")
             print("Value must be 4 or more characters to be valid.\n\n")
         elif (add_reg.isalpha() is True) or (add_reg.isnumeric() is True):
@@ -105,7 +109,9 @@ def add_inventory():
         """
         add_make = input("\n[2] Enter vehicle make (e.g Volkswagen):\n\n")
 
-        if add_make.isalpha() is False:
+        if len(add_make) == 1:
+            print("\nOperation cancelled.\n\n")
+        elif add_make.isalpha() is False:
             print("\nOperation cancelled:")
             print("Car make value must be alphabetical e.g BMW.\n\n")
         elif len(add_make) < 2:
@@ -143,7 +149,9 @@ def add_inventory():
         """
         add_price = input("\n[4] Enter vehicle sale price in euro:\n\n")
 
-        if add_price.isnumeric() is False:
+        if len(add_price) == 1:
+            print("\nOperation cancelled.\n\n")
+        elif add_price.isnumeric() is False:
             print("\nOperation cancelled:")
             print("Vehicle price value must be numeric to be valid e.g. 5000.\n\n")
         elif len(add_price) < 4:
@@ -153,7 +161,7 @@ def add_inventory():
             new_inventory.append(add_price)
             print(f"\nAdd {new_inventory} to current inventory?\n\n")
             selected_add_menu = add_menu[TerminalMenu(add_menu).show()]
-            if selected_add_menu == "(1) YES":
+            if selected_add_menu == "[1] YES":
                 update_worksheet(new_inventory, "inventory")
 
     add_registration()
@@ -178,7 +186,7 @@ def add_sale():
         print("Register the following vehicle as sold?")
         print(f"{inventory.row_values(check_reg.row)}\n")
         selected_add_menu = add_menu[TerminalMenu(add_menu).show()]
-        if selected_add_menu == "(1) YES":
+        if selected_add_menu == "[1] YES":
             update_worksheet(inventory.row_values(check_reg.row), "sales")
             inventory.delete_rows(check_reg.row)
 
@@ -192,8 +200,8 @@ def edit_inventory():
     """
     inv_reg = input("Enter vehicle registration e.g. 12A3456:\n\n").upper()
     check_reg = inventory.find(inv_reg)
-    edit_menu = ["(1) EDIT PRICE", "(2) DEPOSIT TAKEN",
-                 "(3) DEPOSIT RESCINDED", "(4) BACK TO MENU"]
+    edit_menu = ["[1] EDIT PRICE", "[2] DEPOSIT TAKEN",
+                 "[3] DEPOSIT RESCINDED", "[4] BACK TO MENU"]
 
     if check_reg is None:
         print("\nOperation cancelled:")
@@ -203,9 +211,9 @@ def edit_inventory():
         print("Edit the following vehicle?")
         print(f"{inventory.row_values(check_reg.row)}\n")
         selected_add_menu = add_menu[TerminalMenu(add_menu).show()]
-        if selected_add_menu == "(1) YES":
+        if selected_add_menu == "[1] YES":
             selected_edit_menu = edit_menu[TerminalMenu(edit_menu).show()]
-            if selected_edit_menu == "(1) EDIT PRICE":
+            if selected_edit_menu == "[1] EDIT PRICE":
                 add_price = input("\nEnter new vehicle sale price:\n\n")
 
                 if add_price.isnumeric() is False:
@@ -219,7 +227,7 @@ def edit_inventory():
                     inventory.update_cell(check_reg.row, 4, add_price)
                     print("Vehicle price has been updated successfully.\n\n")
 
-            elif selected_edit_menu == "(2) DEPOSIT TAKEN":
+            elif selected_edit_menu == "[3] DEPOSIT TAKEN":
                 add_deposit = input("\n[4] Enter deposit amount paid:\n\n")
 
                 if add_deposit.isnumeric() is False:
@@ -232,10 +240,10 @@ def edit_inventory():
                     print("Adding deposit to selected vehicle...")
                     inventory.update_cell(check_reg.row, 5, add_deposit)
                     print("Deposit amount updated successfully.\n\n")
-            elif selected_edit_menu == "(3) DEPOSIT RESCINDED":
+            elif selected_edit_menu == "[3] DEPOSIT RESCINDED":
                 print("Remove deposit taken from the selected vehicle?")
                 selected_add_menu = add_menu[TerminalMenu(add_menu).show()]
-                if selected_add_menu == "(1) YES":
+                if selected_add_menu == "[4] YES":
                     print("Removing deposit from selected vehicle?\n\n")
                     inventory.update_cell(check_reg.row, 5, "")
                     print("Deposit has been removed successfully.\n\n")
