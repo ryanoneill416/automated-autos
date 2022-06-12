@@ -8,6 +8,7 @@ import gspread
 from google.oauth2.service_account import Credentials
 from pyfiglet import Figlet
 from simple_term_menu import TerminalMenu
+from tabulate import tabulate
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -46,26 +47,29 @@ def display_menu():
     Displays secondary user selection menus to confirm data
     that will be added to spreadsheet
     """
-    main_menu = ["[1] ADD INVENTORY", "[2] REGISTER VEHICLE SALE",
-                 "[3] EDIT INVENTORY", "[4] QUIT"]
+    main_menu = ["[1] VIEW INVENTORY", "[2] ADD INVENTORY", "[3] REGISTER VEHICLE SALE",
+                 "[4] EDIT INVENTORY", "[5] QUIT"]
 
     menu_loop = True
     while menu_loop:
 
-        print('              ________ MAIN MENU ________\n')
+        print('\n              ________ MAIN MENU ________\n')
         selected_main_menu = main_menu[TerminalMenu(main_menu).show()]
         print("")
 
-        if selected_main_menu == "[1] ADD INVENTORY":
+        if selected_main_menu == "[1] VIEW INVENTORY":
+            print(f"You selected {selected_main_menu}\n")
+            print(tabulate(inventory.get_all_values(), headers="firstrow"))
+        elif selected_main_menu == "[2] ADD INVENTORY":
             print(f"You selected {selected_main_menu}\n")
             add_inventory()
-        elif selected_main_menu == "[2] REGISTER VEHICLE SALE":
+        elif selected_main_menu == "[3] REGISTER VEHICLE SALE":
             print(f"You selected {selected_main_menu}\n")
             add_sale()
-        elif selected_main_menu == "[3] EDIT INVENTORY":
+        elif selected_main_menu == "[4] EDIT INVENTORY":
             print(f"You selected {selected_main_menu}\n")
             edit_inventory()
-        elif selected_main_menu == "[4] QUIT":
+        elif selected_main_menu == "[5] QUIT":
             menu_loop = False
 
 
@@ -205,7 +209,7 @@ def edit_inventory():
 
     if check_reg is None:
         print("\nOperation cancelled:")
-        print("No vehicle with this registration was found in inventory.\n\n")
+        print("No vehicle with this registration was found in inventory.\n")
     else:
         print("\nInventory data found:")
         print("Edit the following vehicle?")
@@ -218,35 +222,35 @@ def edit_inventory():
 
                 if add_price.isnumeric() is False:
                     print("\nOperation cancelled:")
-                    print("Vehicle price value must be numeric to be valid.\n\n")
+                    print("Vehicle price value must be numeric to be valid.\n")
                 elif len(add_price) < 4:
                     print("\nOperation cancelled:")
-                    print("Value entered is not profitable, must be at least 1000.\n\n")
+                    print("Value entered is not profitable, must be at least 1000.\n")
                 else:
                     print("Editing price...")
                     inventory.update_cell(check_reg.row, 4, add_price)
-                    print("Vehicle price has been updated successfully.\n\n")
+                    print("Vehicle price has been updated successfully.\n")
 
-            elif selected_edit_menu == "[3] DEPOSIT TAKEN":
+            elif selected_edit_menu == "[2] DEPOSIT TAKEN":
                 add_deposit = input("\n[4] Enter deposit amount paid:\n\n")
 
                 if add_deposit.isnumeric() is False:
                     print("\nOperation cancelled:")
-                    print("Value must be numeric to be valid e.g 500.\n\n")
+                    print("Value must be numeric to be valid e.g 500.\n")
                 elif int(add_deposit) < 500:
                     print("\nOperation cancelled:")
-                    print("Value must be at least 500 to be valid.\n\n")
+                    print("Value must be at least 500 to be valid.\n")
                 else:
                     print("Adding deposit to selected vehicle...")
                     inventory.update_cell(check_reg.row, 5, add_deposit)
-                    print("Deposit amount updated successfully.\n\n")
+                    print("Deposit amount updated successfully.\n")
             elif selected_edit_menu == "[3] DEPOSIT RESCINDED":
                 print("Remove deposit taken from the selected vehicle?")
                 selected_add_menu = add_menu[TerminalMenu(add_menu).show()]
-                if selected_add_menu == "[4] YES":
-                    print("Removing deposit from selected vehicle?\n\n")
+                if selected_add_menu == "[1] YES":
+                    print("Removing deposit from selected vehicle?\n")
                     inventory.update_cell(check_reg.row, 5, "")
-                    print("Deposit has been removed successfully.\n\n")
+                    print("Deposit has been removed successfully.\n")
                 else:
                     print("")
 
@@ -259,7 +263,7 @@ def update_worksheet(data, worksheet):
     print(f"Updating {worksheet} worksheet...")
     worksheet_to_append = SHEET.worksheet(worksheet)
     worksheet_to_append.append_row(data)
-    print(f"The {worksheet} worksheet has been updated successfully.\n\n")
+    print(f"The {worksheet} worksheet has been updated successfully.\n")
 
 
 def main():
