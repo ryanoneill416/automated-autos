@@ -3,7 +3,7 @@ Write your code to expect a terminal of 80 characters wide and 24 rows high
 Accessing our automated_autos google sheet for data handling and manipulation
 Utilising figlet to use ASCI fonts for the application
 """
-
+from os import system, name
 import gspread
 from google.oauth2.service_account import Credentials
 from pyfiglet import Figlet
@@ -70,6 +70,7 @@ def display_menu():
             edit_inventory()
         elif selected_main_menu == "[5] QUIT":
             menu_loop = False
+            end_application()
 
 
 def add_inventory():
@@ -288,6 +289,22 @@ def main():
     """
     display_homepage()
     display_menu()
+
+
+def end_application():
+    """
+    Clears the current displayed terminal
+    Displays application homepage
+    Provides user with exit message
+    """
+    if name == 'nt':
+        _ = system('cls')
+    else:
+        _ = system('clear')
+    display_homepage()
+    print("\n            Application closed successfully.")
+    print("\n\n      Thank you for using 'Automated Auto Dealer' :)\n")
+    print("\n--------------------------------------------------------")
 
 
 main()
