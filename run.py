@@ -302,9 +302,9 @@ def end_application():
     else:
         _ = system('clear')
     display_homepage()
-    print("\n            Application closed successfully.")
-    print("\n\n      Thank you for using 'Automated Auto Dealer' :)\n")
-    print("\n--------------------------------------------------------")
+    print("            Application closed successfully.")
+    print("\n      Thank you for using 'Automated Auto Dealer' :)\n")
+    print("--------------------------------------------------------")
 
 
 main()
