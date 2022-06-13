@@ -55,7 +55,6 @@ def display_menu():
 
         print('\n              ________ MAIN MENU ________\n')
         selected_main_menu = main_menu[TerminalMenu(main_menu).show()]
-        print("")
 
         if selected_main_menu == "[1] VIEW INVENTORY":
             print(f"You selected {selected_main_menu}\n")
@@ -91,16 +90,16 @@ def add_inventory():
         add_reg = input("[1] Enter vehicle registration:\n\n")
 
         if len(add_reg) == 1:
-            print("\nOperation cancelled.\n\n")
+            print("\nOperation cancelled.")
         elif len(add_reg) < 4:
             print("\nOperation cancelled:")
-            print("Value must be 4 or more characters to be valid.\n\n")
+            print("Value must be 4 or more characters to be valid.")
         elif (add_reg.isalpha() is True) or (add_reg.isnumeric() is True):
             print("\nOperation cancelled:")
-            print("Value must be alphanumeric to be valid.\n\n")
+            print("Value must be alphanumeric to be valid.")
         elif add_reg.isalnum() is False:
             print("\nOperation cancelled:")
-            print("Value must be alphanumeric to be valid.\n\n")
+            print("Value must be alphanumeric to be valid.")
         else:
             add_reg = add_reg.upper()
             new_inventory.append(add_reg)
@@ -114,13 +113,13 @@ def add_inventory():
         add_make = input("\n[2] Enter vehicle make (e.g Volkswagen):\n\n")
 
         if len(add_make) == 1:
-            print("\nOperation cancelled.\n\n")
+            print("\nOperation cancelled.")
         elif add_make.isalpha() is False:
             print("\nOperation cancelled:")
-            print("Car make value must be alphabetical e.g BMW.\n\n")
+            print("Car make value must be alphabetical e.g BMW.")
         elif len(add_make) < 2:
             print("\nOperation cancelled:")
-            print("Car make value must be > 1 character long e.g. KIA.\n\n")
+            print("Car make value must be > 1 character long e.g. KIA.")
         else:
             add_make = add_make.capitalize()
             new_inventory.append(add_make)
@@ -135,10 +134,10 @@ def add_inventory():
 
         if add_model.isalnum() is False:
             print("\nOperation cancelled:")
-            print("Car model value must be alphanumeric e.g 440i, M3.\n\n")
+            print("Car model value must be alphanumeric e.g 440i, M3.")
         elif len(add_model) < 2:
             print("\nOperation cancelled:")
-            print("Car model value must be > 1 character long e.g M3.\n\n")
+            print("Car model value must be > 1 character long e.g M3.")
         else:
             add_model = add_model.capitalize()
             new_inventory.append(add_model)
@@ -154,16 +153,19 @@ def add_inventory():
         add_price = input("\n[4] Enter vehicle sale price in euro:\n\n")
 
         if len(add_price) == 1:
-            print("\nOperation cancelled.\n\n")
+            print("\nOperation cancelled.")
         elif add_price.isnumeric() is False:
             print("\nOperation cancelled:")
-            print("Vehicle price value must be numeric to be valid e.g. 5000.\n\n")
+            print("Vehicle price value must be numeric to be valid e.g. 5000.")
         elif len(add_price) < 4:
             print("\nOperation cancelled:")
-            print("Value entered is not profitable, must be at least 1000.\n\n")
+            print("Value entered is not profitable, must be at least 1000.")
         else:
             new_inventory.append(add_price)
-            print(f"\nAdd {new_inventory} to current inventory?\n\n")
+            print("\nAdd this vehicle to current inventory?\n")
+            print(tabulate([["Car reg.:", "Make:", "Model:", "Price(€):"], new_inventory],
+                           headers="firstrow"))
+            print("")
             selected_add_menu = add_menu[TerminalMenu(add_menu).show()]
             if selected_add_menu == "[1] YES":
                 update_worksheet(new_inventory, "inventory")
@@ -187,8 +189,10 @@ def add_sale():
         print("No vehicle with this registration was found.\n\n")
     else:
         print("\nInventory data found:")
-        print("Register the following vehicle as sold?")
-        print(f"{inventory.row_values(check_reg.row)}\n")
+        print("Register the following vehicle as sold?\n")
+        print(tabulate([["Car reg.:", "Make:", "Model:", "Price(€):"],
+                       inventory.row_values(check_reg.row)], headers="firstrow"))
+        print("")
         selected_add_menu = add_menu[TerminalMenu(add_menu).show()]
         if selected_add_menu == "[1] YES":
             update_worksheet(inventory.row_values(check_reg.row), "sales")
@@ -212,8 +216,10 @@ def edit_inventory():
         print("No vehicle with this registration was found in inventory.\n")
     else:
         print("\nInventory data found:")
-        print("Edit the following vehicle?")
-        print(f"{inventory.row_values(check_reg.row)}\n")
+        print("Edit the following vehicle?\n")
+        print(tabulate([inventory.row_values(1),
+                       inventory.row_values(check_reg.row)], headers="firstrow"))
+        print("")
         selected_add_menu = add_menu[TerminalMenu(add_menu).show()]
         if selected_add_menu == "[1] YES":
             selected_edit_menu = edit_menu[TerminalMenu(edit_menu).show()]
@@ -230,6 +236,9 @@ def edit_inventory():
                     print("Editing price...")
                     inventory.update_cell(check_reg.row, 4, add_price)
                     print("Vehicle price has been updated successfully.\n")
+                    print(tabulate([inventory.row_values(1),
+                                   inventory.row_values(check_reg.row)], headers="firstrow"))
+                    print("")
 
             elif selected_edit_menu == "[2] DEPOSIT TAKEN":
                 add_deposit = input("\n[4] Enter deposit amount paid:\n\n")
@@ -244,13 +253,19 @@ def edit_inventory():
                     print("Adding deposit to selected vehicle...")
                     inventory.update_cell(check_reg.row, 5, add_deposit)
                     print("Deposit amount updated successfully.\n")
+                    print(tabulate([inventory.row_values(1),
+                                   inventory.row_values(check_reg.row)], headers="firstrow"))
+                    print("")
             elif selected_edit_menu == "[3] DEPOSIT RESCINDED":
-                print("Remove deposit taken from the selected vehicle?")
+                print("Remove deposit taken from the selected vehicle?\n")
                 selected_add_menu = add_menu[TerminalMenu(add_menu).show()]
                 if selected_add_menu == "[1] YES":
-                    print("Removing deposit from selected vehicle?\n")
+                    print("Removing deposit from selected vehicle...\n")
                     inventory.update_cell(check_reg.row, 5, "")
                     print("Deposit has been removed successfully.\n")
+                    print(tabulate([inventory.row_values(1),
+                                   inventory.row_values(check_reg.row)], headers="firstrow"))
+                    print("")
                 else:
                     print("")
 
