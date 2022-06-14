@@ -47,18 +47,23 @@ def display_menu():
     Displays secondary user selection menus to confirm data
     that will be added to spreadsheet
     """
-    main_menu = ["[1] VIEW INVENTORY", "[2] ADD INVENTORY", "[3] REGISTER VEHICLE SALE",
-                 "[4] EDIT INVENTORY", "[5] QUIT"]
-
+    main_menu = ["[1] VIEW INVENTORY/ RECENT SALES", "[2] ADD INVENTORY",
+                 "[3] REGISTER VEHICLE SALE", "[4] EDIT INVENTORY", "[5] QUIT"]
+    view_menu = ["[1] VIEW CURRENT INVENTORY", "[2] VIEW RECENT SALES",
+                 "[3] BACK TO MENU"]
     menu_loop = True
     while menu_loop:
 
         print('\n              ________ MAIN MENU ________\n')
         selected_main_menu = main_menu[TerminalMenu(main_menu).show()]
 
-        if selected_main_menu == "[1] VIEW INVENTORY":
+        if selected_main_menu == "[1] VIEW INVENTORY/ RECENT SALES":
             print(f"You selected {selected_main_menu}\n")
-            print(tabulate(inventory.get_all_values(), headers="firstrow"))
+            selected_view_menu = view_menu[TerminalMenu(view_menu).show()]
+            if selected_view_menu == "[1] VIEW CURRENT INVENTORY":
+                print(tabulate(inventory.get_all_values(), headers="firstrow"))
+            elif selected_view_menu == "[2] VIEW RECENT SALES":
+                print(tabulate(sales.get_all_values(), headers="firstrow"))
         elif selected_main_menu == "[2] ADD INVENTORY":
             print(f"You selected {selected_main_menu}\n")
             add_inventory()
@@ -184,11 +189,14 @@ def add_sale():
     Adds a vehicle to the sales worksheet
     Removes that same vehicle from the inventory worksheet
     """
-
+    print("Enter the following data to register a vehicle as sold.")
+    print("Enter Q to go back to the main menu.\n")
     sale_reg = input("Enter vehicle registration e.g 12D61460:\n\n").upper()
     check_reg = inventory.find(sale_reg)
 
-    if check_reg is None:
+    if len(sale_reg) == 1:
+        print("\nOperation cancelled.")
+    elif check_reg is None:
         print("\nOperation cancelled:")
         print("No vehicle with this registration was found.\n\n")
     else:
@@ -210,12 +218,16 @@ def edit_inventory():
     Gives user selection of what they wish to edit about the inventory selected
     Each option contains value validation and double-checking before completion
     """
+    print("Enter the following data to register a vehicle as sold.")
+    print("Enter Q to go back to the main menu.\n")
     inv_reg = input("Enter vehicle registration e.g. 12A3456:\n\n").upper()
     check_reg = inventory.find(inv_reg)
     edit_menu = ["[1] EDIT PRICE", "[2] DEPOSIT TAKEN",
                  "[3] DEPOSIT RESCINDED", "[4] BACK TO MENU"]
 
-    if check_reg is None:
+    if len(inv_reg) == 1:
+        print("\nOperation cancelled.")
+    elif check_reg is None:
         print("\nOperation cancelled:")
         print("No vehicle with this registration was found in inventory.\n")
     else:
@@ -282,7 +294,6 @@ def edit_inventory():
                 else:
                     print("\nOperation cancelled:")
                     print("There is no deposit being held on this vehicle\n")
-
 
 
 def update_worksheet(data, worksheet):
