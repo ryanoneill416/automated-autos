@@ -88,9 +88,13 @@ def add_inventory():
         Retrieves the registration number of new inventory from user
         Validates the information before appending to empty list
         """
-        add_reg = input("[1] Enter vehicle registration:\n\n")
+        add_reg = input("[1] Enter vehicle registration:\n\n").upper()
+        check_reg = inventory.find(add_reg)
 
-        if len(add_reg) == 1:
+        if check_reg is not None:
+            print("\nOperation cancelled:")
+            print("This vehicle is already listed in your inventory.")
+        elif len(add_reg) == 1:
             print("\nOperation cancelled.")
         elif len(add_reg) < 4:
             print("\nOperation cancelled:")
@@ -102,7 +106,6 @@ def add_inventory():
             print("\nOperation cancelled:")
             print("Value must be alphanumeric to be valid.")
         else:
-            add_reg = add_reg.upper()
             new_inventory.append(add_reg)
             add_car_make()
 
@@ -242,33 +245,44 @@ def edit_inventory():
                     print("")
 
             elif selected_edit_menu == "[2] DEPOSIT TAKEN":
-                add_deposit = input("\n[4] Enter deposit amount paid:\n\n")
+                if inventory.cell(check_reg.row, 5).value:
+                    print("\nOperation cancelled:")
+                    print("There is an existing deposit on this vehicle\n")
+                else:
+                    add_deposit = input("\n[4] Enter deposit amount paid:\n\n")
+                    if len(add_deposit) == 1:
+                        print("\nOperation cancelled.")
+                    elif add_deposit.isnumeric() is False:
+                        print("\nOperation cancelled:")
+                        print("Value must be numeric to be valid e.g 500.\n")
+                    elif int(add_deposit) < 500:
+                        print("\nOperation cancelled:")
+                        print("Value must be at least 500 to be valid.\n")
+                    else:
+                        print("Adding deposit to selected vehicle...")
+                        inventory.update_cell(check_reg.row, 5, add_deposit)
+                        print("Deposit amount updated successfully.\n")
+                        print(tabulate([inventory.row_values(1),
+                                       inventory.row_values(check_reg.row)], headers="firstrow"))
+                        print("")
 
-                if add_deposit.isnumeric() is False:
-                    print("\nOperation cancelled:")
-                    print("Value must be numeric to be valid e.g 500.\n")
-                elif int(add_deposit) < 500:
-                    print("\nOperation cancelled:")
-                    print("Value must be at least 500 to be valid.\n")
-                else:
-                    print("Adding deposit to selected vehicle...")
-                    inventory.update_cell(check_reg.row, 5, add_deposit)
-                    print("Deposit amount updated successfully.\n")
-                    print(tabulate([inventory.row_values(1),
-                                   inventory.row_values(check_reg.row)], headers="firstrow"))
-                    print("")
             elif selected_edit_menu == "[3] DEPOSIT RESCINDED":
-                print("Remove deposit taken from the selected vehicle?\n")
-                selected_add_menu = add_menu[TerminalMenu(add_menu).show()]
-                if selected_add_menu == "[1] YES":
-                    print("Removing deposit from selected vehicle...\n")
-                    inventory.update_cell(check_reg.row, 5, "")
-                    print("Deposit has been removed successfully.\n")
-                    print(tabulate([inventory.row_values(1),
-                                   inventory.row_values(check_reg.row)], headers="firstrow"))
-                    print("")
+                if inventory.cell(check_reg.row, 5).value:
+                    print("Remove deposit taken from the selected vehicle?\n")
+                    selected_add_menu = add_menu[TerminalMenu(add_menu).show()]
+                    if selected_add_menu == "[1] YES":
+                        print("Removing deposit from selected vehicle...\n")
+                        inventory.update_cell(check_reg.row, 5, "")
+                        print("Deposit has been removed successfully.\n")
+                        print(tabulate([inventory.row_values(1),
+                                       inventory.row_values(check_reg.row)], headers="firstrow"))
+                        print("")
+                    else:
+                        print("")
                 else:
-                    print("")
+                    print("\nOperation cancelled:")
+                    print("There is no deposit being held on this vehicle\n")
+
 
 
 def update_worksheet(data, worksheet):
