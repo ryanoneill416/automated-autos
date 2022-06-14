@@ -83,6 +83,7 @@ def add_inventory():
     Allows user to enter vehicle data for new inventory acquired
     Adds a new vehicle to the inventory list for the dealership
     Ensures data input from the user is valid
+    User can exit the process by entering Q or a single character
     """
     new_inventory = []
     print("Enter the following data to add a vehicle to your inventory.")
@@ -118,6 +119,7 @@ def add_inventory():
         """
         Retrieves the car make of new inventory from user
         Validates the information before appending to empty list
+        User can exit process by entering Q or a single character
         """
         add_make = input("\n[2] Enter vehicle make (e.g Volkswagen):\n\n")
 
@@ -138,15 +140,15 @@ def add_inventory():
         """
         Retrieves the model of new inventory from user
         Validates the information before appending to empty list
+        User can exit process by entering Q or a single character
         """
         add_model = input("\n[3] Enter vehicle model (e.g Golf):\n\n")
 
-        if add_model.isalnum() is False:
+        if len(add_model) == 1:
+            print("\nOperation cancelled.")
+        elif add_model.isalnum() is False:
             print("\nOperation cancelled:")
             print("Car model value must be alphanumeric e.g 440i, M3.")
-        elif len(add_model) < 2:
-            print("\nOperation cancelled:")
-            print("Car model value must be > 1 character long e.g M3.")
         else:
             add_model = add_model.capitalize()
             new_inventory.append(add_model)
@@ -157,7 +159,8 @@ def add_inventory():
         Retrieves starting sale price of new inventory from user
         Validates the information before appending to empty list
         Presents total inputted data as a list and prompts for confirmation
-        If user is happy with data, the list is added to inventory
+        If user is happy with data, the vehicle is added to inventory
+        User can exit process by entering Q or a single character
         """
         add_price = input("\n[4] Enter vehicle sale price in euro:\n\n")
 
@@ -185,9 +188,11 @@ def add_inventory():
 def add_sale():
     """
     Searches for a vehicle in inventory by checking registration
+    If no vehicle with selected reg. is found, user is notified of that
     Allows user to verify if they want to mark the found vehicle as sold
     Adds a vehicle to the sales worksheet
     Removes that same vehicle from the inventory worksheet
+    User can exit process by entering Q or a single character
     """
     print("Enter the following data to register a vehicle as sold.")
     print("Enter Q to go back to the main menu.\n")
@@ -217,13 +222,16 @@ def edit_inventory():
     Allows user to verify the correct vehicle was inputted
     Gives user selection of what they wish to edit about the inventory selected
     Each option contains value validation and double-checking before completion
+    Deposit can be added, but only if no existing deposit is existing
+    Deposit can be moved, however process halted if no deposit exists
+    User can exit by entering q or a single character
     """
     print("Enter the following data to register a vehicle as sold.")
     print("Enter Q to go back to the main menu.\n")
     inv_reg = input("Enter vehicle registration e.g. 12A3456:\n\n").upper()
     check_reg = inventory.find(inv_reg)
     edit_menu = ["[1] EDIT PRICE", "[2] DEPOSIT TAKEN",
-                 "[3] DEPOSIT RESCINDED", "[4] BACK TO MENU"]
+                 "[3] REMOVE DEPOSIT", "[4] BACK TO MENU"]
 
     if len(inv_reg) == 1:
         print("\nOperation cancelled.")
@@ -278,7 +286,7 @@ def edit_inventory():
                                        inventory.row_values(check_reg.row)], headers="firstrow"))
                         print("")
 
-            elif selected_edit_menu == "[3] DEPOSIT RESCINDED":
+            elif selected_edit_menu == "[3] REMOVE DEPOSIT":
                 if inventory.cell(check_reg.row, 5).value:
                     print("Remove deposit taken from the selected vehicle?\n")
                     selected_add_menu = add_menu[TerminalMenu(add_menu).show()]
@@ -319,16 +327,15 @@ def main():
 def end_application():
     """
     Clears the current displayed terminal
-    Displays application homepage
-    Provides user with exit message
+    Displays application homepage with added exit message
     """
     if name == 'nt':
         _ = system('cls')
     else:
         _ = system('clear')
     display_homepage()
-    print("            Application closed successfully.")
-    print("\n      Thank you for using 'Automated Auto Dealer' :)\n")
+    print("\n            Application closed successfully.")
+    print("\n      Thank you for using 'Automated Auto Dealer' :)\n\n")
     print("--------------------------------------------------------")
 
 
