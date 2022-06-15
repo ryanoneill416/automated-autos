@@ -14,6 +14,9 @@ and changing current stock, analysing recent sales and keeping key information w
 My goal is to achieve an industry-standard application with true purpose and efficient functionality for the user
 and or business owner.
 
+The application utilises two Google sheets to manipulate and store data. 
+[View a published representation of the spreadsheets](https://docs.google.com/spreadsheets/d/e/2PACX-1vQXu3XEV_6LwiIKBBGe7yLibX8Np6Uud8U3TJmXO-_bpWvDfx8slS3pM8W0kmvMhrkH5313yMxmiKO5/pubhtml#)
+
 The application is currently deployed as a mock terminal through heroku and feel free to check it out for yourself :)
 
 ## [View the deployed website here!](https://automated-autos.herokuapp.com/)
@@ -32,13 +35,11 @@ The application is currently deployed as a mock terminal through heroku and feel
 - [Technologies Used](#technologies-used)
 - [Testing](#testing)
     - [Functionality Testing](#functionality-testing)
-    - [Compatibility Testing](#compatibility-testing)
     - [Bugs Encountered During Development](#bugs-encountered-during-development)
     - [Code Validation](#code-validation)
-    - [Performance Testing](#performance-testing)
 - [Deployment](#deployment)
 - [Credits](#credits)
-- [Screenshots](#screenshots)
+
 # UX
 
 ## Website owner business goals
@@ -130,6 +131,9 @@ necessary car details for recording inventory data which are: registration, make
 The inputs are passed through extensive input validation to ensure the data is valid e.g. the price has to be 
 numeric and the registration must be alphanumeric.
 
+The application also checks whether a vehicle with that registration aready exists in the inventory, hence,
+preventing unwanted duplication of data.
+
 If user input is deemed invalid the application will display "Operation Cancelled:" and the reason for such.
 
 ![Invalid Input Message Example](./images/automated-autos-add-fail.jpg)
@@ -142,3 +146,69 @@ again.
 
 ![Add Inventory Process](./images/automated-autos-add.jpg)
 
+## [3] Register vehicle sale
+
+The register vehicle option requests a user input of a vehicle registration and with this, checks if a 
+vehicle with this registration is found in the inventory worksheet.
+
+If no vehicle is found, the user is notified and the menu is displayed again.
+
+![(Sale) Vehicle not found](./images/automated-autos-sale.jpg)
+
+If a vehicle with that registration is found, it is displayed and the user can select to register that
+vehicle as sold. Doing so will remove said vehicle from the inventory worksheet and subsequently add it to
+the corresponding sales worksheet.
+
+![(Sale) Vehicle with that registration found](./images/automated-autos-sale1.jpg)
+
+## [4] Edit inventory
+
+The edit inventory, like the "Register vehicle sale", also checks for an existing vehicle of the inputted 
+registration in order for the process to run successfully.
+
+Upon finding a vehicle in the inventory with the inputted registration, the user can choose to edit the price
+of the vehicle, register that a deposit has been paid for the vehicle or to remove an existing deposit.
+
+Before choosing which operation they want to carry out, the application displays the details of the vehicle found 
+so the user can ensure they selected the correct vehicle.
+
+![Edit Inventory Menu](./images/automated-autos-edit.jpg)
+
+[1] Edit price:
+* The new price for the vehicle will be verified by various input validation measures.
+* If new price is a valid value the price of the vehicle will be changed.
+* The application will display the new vehicle data for the edited vehicle
+
+![Successful Edit Price](./images/automated-autos-edit-price.jpg)
+
+[2] Add deposit:
+* The vehicle selected will be checked for if there is an existing deposit being held by it.
+* If a deposit is already held on the vehicle, the user will be notified, the operation will be cancelled and
+the menu will be displayed again.
+* If no deposit is held on the vehicle, the user is prompted to enter the amount of a deposit taken.
+* If deposit value passes input validation e.g. must be at least 500, the deposit will be added and the 
+updated vehicle data will be displayed to the user.
+
+![Successful Deposit Added](./images/automated-autos-add-dep.jpg)
+
+[3] Add deposit:
+* The vehicle selected will be checked for if there is an existing deposit being held by it.
+* If there is no existing deposit for the vehicle, the user will be notified, the operation will be cancelled and
+the menu will be displayed again.
+* If there is an existing deposit that needs to be removed, the user will be prompted to answer are they sure that
+they wish to remove it.
+* The deposit is then removed and the updated car details are displayed to the user.
+
+![Successful Deposit Removal](./images/automated-autos-remove-dep.jpg)
+
+[4] Back to menu:
+* If this option is selected, the user is brought back to the main menu where they can choose to utilise another 
+operation or to quit the application.
+
+## [5] Quit
+
+The quit option simply closes the application for the user and displays both the homepage and the exit page.
+
+It notifies the user that the application has been closed succesfully and thanks them for using 'Automated Auto Dealer'.
+
+![Application Closing Page](./images/automated-autos-quit.jpg)

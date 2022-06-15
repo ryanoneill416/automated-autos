@@ -175,8 +175,8 @@ def add_inventory():
         else:
             new_inventory.append(add_price)
             print("\nAdd this vehicle to current inventory?\n")
-            print(tabulate([["Car reg.:", "Make:", "Model:", "Price(€):"], new_inventory],
-                           headers="firstrow"))
+            print(tabulate([["Car reg.:", "Make:", "Model:", "Price(€):"],
+                            new_inventory], headers="firstrow"))
             print("")
             selected_add_menu = add_menu[TerminalMenu(add_menu).show()]
             if selected_add_menu == "[1] YES":
@@ -208,7 +208,8 @@ def add_sale():
         print("\nInventory data found:")
         print("Register the following vehicle as sold?\n")
         print(tabulate([["Car reg.:", "Make:", "Model:", "Price(€):"],
-                       inventory.row_values(check_reg.row)], headers="firstrow"))
+                       inventory.row_values(check_reg.row)],
+                       headers="firstrow"))
         print("")
         selected_add_menu = add_menu[TerminalMenu(add_menu).show()]
         if selected_add_menu == "[1] YES":
@@ -242,7 +243,8 @@ def edit_inventory():
         print("\nInventory data found:")
         print("Edit the following vehicle?\n")
         print(tabulate([inventory.row_values(1),
-                       inventory.row_values(check_reg.row)], headers="firstrow"))
+                       inventory.row_values(check_reg.row)],
+                       headers="firstrow"))
         print("")
         selected_add_menu = add_menu[TerminalMenu(add_menu).show()]
         if selected_add_menu == "[1] YES":
@@ -255,13 +257,15 @@ def edit_inventory():
                     print("Vehicle price value must be numeric to be valid.\n")
                 elif len(add_price) < 4:
                     print("\nOperation cancelled:")
-                    print("Value entered is not profitable, must be at least 1000.\n")
+                    print("Value entered is not profitable,"
+                          " must be at least 1000.\n")
                 else:
                     print("Editing price...")
                     inventory.update_cell(check_reg.row, 4, add_price)
                     print("Vehicle price has been updated successfully.\n")
                     print(tabulate([inventory.row_values(1),
-                                   inventory.row_values(check_reg.row)], headers="firstrow"))
+                                   inventory.row_values(check_reg.row)],
+                                   headers="firstrow"))
                     print("")
 
             elif selected_edit_menu == "[2] DEPOSIT TAKEN":
@@ -283,7 +287,8 @@ def edit_inventory():
                         inventory.update_cell(check_reg.row, 5, add_deposit)
                         print("Deposit amount updated successfully.\n")
                         print(tabulate([inventory.row_values(1),
-                                       inventory.row_values(check_reg.row)], headers="firstrow"))
+                                       inventory.row_values(check_reg.row)],
+                                       headers="firstrow"))
                         print("")
 
             elif selected_edit_menu == "[3] REMOVE DEPOSIT":
@@ -295,7 +300,8 @@ def edit_inventory():
                         inventory.update_cell(check_reg.row, 5, "")
                         print("Deposit has been removed successfully.\n")
                         print(tabulate([inventory.row_values(1),
-                                       inventory.row_values(check_reg.row)], headers="firstrow"))
+                                       inventory.row_values(check_reg.row)],
+                                       headers="firstrow"))
                         print("")
                     else:
                         print("")
