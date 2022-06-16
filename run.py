@@ -9,6 +9,8 @@ from google.oauth2.service_account import Credentials
 from pyfiglet import Figlet
 from simple_term_menu import TerminalMenu
 from tabulate import tabulate
+from colorama import Style, Fore
+
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -34,9 +36,10 @@ def display_homepage():
     Brief accreditation
     """
     fig_font = Figlet(font='slant')
-    print(fig_font.renderText('Automated\nAuto Dealer\n'))
-    print('------ Inventory Management Tool For Auto Traders ------')
-    print('--------------- Created By RyanONeill416 ---------------\n')
+    print(Fore.CYAN + (fig_font.renderText('Automated\nAuto Dealer\n')))
+    print('------ Inventory Management Tool For Auto Traders -------')
+    print('--------------- Created By RyanONeill416 ----------------\n'
+          + Style.RESET_ALL)
 
 
 def display_menu():
@@ -54,7 +57,8 @@ def display_menu():
     menu_loop = True
     while menu_loop:
 
-        print('\n              ________ MAIN MENU ________\n')
+        print(Fore.CYAN + ('\n              ________ MAIN MENU ________\n')
+              + Style.RESET_ALL)
         selected_main_menu = main_menu[TerminalMenu(main_menu).show()]
 
         if selected_main_menu == "[1] VIEW INVENTORY/ RECENT SALES":
@@ -98,18 +102,18 @@ def add_inventory():
         check_reg = inventory.find(add_reg)
 
         if check_reg is not None:
-            print("\nOperation cancelled:")
+            print(Fore.RED + "\nOperation cancelled:")
             print("This vehicle is already listed in your inventory.")
         elif len(add_reg) == 1:
-            print("\nOperation cancelled.")
+            print(Fore.RED + "\nOperation cancelled.")
         elif len(add_reg) < 4:
-            print("\nOperation cancelled:")
+            print(Fore.RED + "\nOperation cancelled:")
             print("Value must be 4 or more characters to be valid.")
         elif (add_reg.isalpha() is True) or (add_reg.isnumeric() is True):
-            print("\nOperation cancelled:")
+            print(Fore.RED + "\nOperation cancelled:")
             print("Value must be alphanumeric to be valid.")
         elif add_reg.isalnum() is False:
-            print("\nOperation cancelled:")
+            print(Fore.RED + "\nOperation cancelled:")
             print("Value must be alphanumeric to be valid.")
         else:
             new_inventory.append(add_reg)
@@ -124,12 +128,12 @@ def add_inventory():
         add_make = input("\n[2] Enter vehicle make (e.g Volkswagen):\n\n")
 
         if len(add_make) == 1:
-            print("\nOperation cancelled.")
+            print(Fore.RED + "\nOperation cancelled.")
         elif add_make.isalpha() is False:
-            print("\nOperation cancelled:")
+            print(Fore.RED + "\nOperation cancelled:")
             print("Car make value must be alphabetical e.g BMW.")
         elif len(add_make) < 2:
-            print("\nOperation cancelled:")
+            print(Fore.RED + "\nOperation cancelled:")
             print("Car make value must be > 1 character long e.g. KIA.")
         else:
             add_make = add_make.capitalize()
@@ -145,9 +149,9 @@ def add_inventory():
         add_model = input("\n[3] Enter vehicle model (e.g Golf):\n\n")
 
         if len(add_model) == 1:
-            print("\nOperation cancelled.")
+            print(Fore.RED + "\nOperation cancelled.")
         elif add_model.isalnum() is False:
-            print("\nOperation cancelled:")
+            print(Fore.RED + "\nOperation cancelled:")
             print("Car model value must be alphanumeric e.g 440i, M3.")
         else:
             add_model = add_model.capitalize()
@@ -165,12 +169,12 @@ def add_inventory():
         add_price = input("\n[4] Enter vehicle sale price in euro:\n\n")
 
         if len(add_price) == 1:
-            print("\nOperation cancelled.")
+            print(Fore.RED + "\nOperation cancelled.")
         elif add_price.isnumeric() is False:
-            print("\nOperation cancelled:")
+            print(Fore.RED + "\nOperation cancelled:")
             print("Vehicle price value must be numeric to be valid e.g. 5000.")
         elif len(add_price) < 4:
-            print("\nOperation cancelled:")
+            print(Fore.RED + "\nOperation cancelled:")
             print("Value entered is not profitable, must be at least 1000.")
         else:
             new_inventory.append(add_price)
@@ -200,9 +204,9 @@ def add_sale():
     check_reg = inventory.find(sale_reg)
 
     if len(sale_reg) == 1:
-        print("\nOperation cancelled.")
+        print(Fore.RED + "\nOperation cancelled.")
     elif check_reg is None:
-        print("\nOperation cancelled:")
+        print(Fore.RED + "\nOperation cancelled:")
         print("No vehicle with this registration was found.\n\n")
     else:
         print("\nInventory data found:")
@@ -235,9 +239,9 @@ def edit_inventory():
                  "[3] REMOVE DEPOSIT", "[4] BACK TO MENU"]
 
     if len(inv_reg) == 1:
-        print("\nOperation cancelled.")
+        print(Fore.RED + "\nOperation cancelled.")
     elif check_reg is None:
-        print("\nOperation cancelled:")
+        print(Fore.RED + "\nOperation cancelled:")
         print("No vehicle with this registration was found in inventory.\n")
     else:
         print("\nInventory data found:")
@@ -253,10 +257,10 @@ def edit_inventory():
                 add_price = input("\nEnter new vehicle sale price:\n\n")
 
                 if add_price.isnumeric() is False:
-                    print("\nOperation cancelled:")
+                    print(Fore.RED + "\nOperation cancelled:")
                     print("Vehicle price value must be numeric to be valid.\n")
                 elif len(add_price) < 4:
-                    print("\nOperation cancelled:")
+                    print(Fore.RED + "\nOperation cancelled:")
                     print("Value entered is not profitable,"
                           " must be at least 1000.\n")
                 else:
@@ -270,17 +274,17 @@ def edit_inventory():
 
             elif selected_edit_menu == "[2] DEPOSIT TAKEN":
                 if inventory.cell(check_reg.row, 5).value:
-                    print("\nOperation cancelled:")
+                    print(Fore.RED + "\nOperation cancelled:")
                     print("There is an existing deposit on this vehicle\n")
                 else:
                     add_deposit = input("\n[4] Enter deposit amount paid:\n\n")
                     if len(add_deposit) == 1:
-                        print("\nOperation cancelled.")
+                        print(Fore.RED + "\nOperation cancelled.")
                     elif add_deposit.isnumeric() is False:
-                        print("\nOperation cancelled:")
+                        print(Fore.RED + "\nOperation cancelled:")
                         print("Value must be numeric to be valid e.g 500.\n")
                     elif int(add_deposit) < 500:
-                        print("\nOperation cancelled:")
+                        print(Fore.RED + "\nOperation cancelled:")
                         print("Value must be at least 500 to be valid.\n")
                     else:
                         print("Adding deposit to selected vehicle...")
@@ -306,7 +310,7 @@ def edit_inventory():
                     else:
                         print("")
                 else:
-                    print("\nOperation cancelled:")
+                    print(Fore.RED + "\nOperation cancelled:")
                     print("There is no deposit being held on this vehicle\n")
 
 
@@ -342,7 +346,9 @@ def end_application():
     display_homepage()
     print("\n            Application closed successfully.")
     print("\n      Thank you for using 'Automated Auto Dealer' :)\n\n")
-    print("--------------------------------------------------------")
+    print(Fore.CYAN +
+          ("---------------------------------------------------------")
+          + Style.RESET_ALL)
 
 
 main()
