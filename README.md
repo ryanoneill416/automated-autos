@@ -347,6 +347,27 @@ Repeat this step and add "Node.js". **IMPORTANT** It must be in this order with 
 
 [Back to Table of contents](#table-of-contents)
 
+___
+# Credits
+
+To develop this application I used Code Institute's Gitpod Python Template which presents the command-line application as 
+a mock terminal in the web browser. The template can be found [here!](https://github.com/Code-Institute-Org/python-essentials-template)
+
+My use of python libraries is credited from the following:
+
+***GSpread:***
+* The love-sandwiches project I completed with Code Institute.
+* Official GSpread documentation found [here](https://docs.gspread.org/en/v5.4.0/index.html)
+
+***Tabulate***
+* Official Tabulate documentation found [here](https://pypi.org/project/tabulate/)
+
+***Simple_term_menu***
+* Official simple_term_menu documentation found [here](https://pypi.org/project/simple-term-menu/)
+
+[Back to Table of contents](#table-of-contents)
+
+
 
 
 
