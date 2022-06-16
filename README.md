@@ -32,6 +32,7 @@ The application is currently deployed as a mock terminal through heroku and feel
     - [User Story](#user-story)
     - [Flowchart](#flowchart)
 - [Features](#features)
+- [Data Model](#data-model)
 - [Technologies Used](#technologies-used)
 - [Testing](#testing)
     - [Functionality Testing](#functionality-testing)
@@ -40,6 +41,7 @@ The application is currently deployed as a mock terminal through heroku and feel
 - [Deployment](#deployment)
 - [Credits](#credits)
 
+___
 # UX
 
 ## Website owner business goals
@@ -77,6 +79,7 @@ confirm changes.
 * I would like to add/ remove deposits taken for vehicle sales, as well as know if there is already an existing
 deposit outstanding on the vehicle.
 
+___
 # Flowchart
 
 To aid the development process of building the application, I used [Lucid Chart](https://www.lucidchart.com/) to 
@@ -85,6 +88,9 @@ ensure that key data being sent to both the inventory spreadsheet and sales spre
 
 ![Automated Auto Dealer Flowchart](./images/automated-autos-flow.jpeg)
 
+[Back to Table of contents](#table-of-contents)
+
+___
 # Features
 
 ## Homepage
@@ -212,3 +218,135 @@ The quit option simply closes the application for the user and displays both the
 It notifies the user that the application has been closed succesfully and thanks them for using 'Automated Auto Dealer'.
 
 ![Application Closing Page](./images/automated-autos-quit.jpg)
+
+[Back to Table of contents](#table-of-contents)
+
+___
+# Data Model
+
+For this application I made use of the GSpread python library and two Google spreadsheets to hold both the current
+inventory and the recent sales of the auto trader/ car dealership.
+[View a published representation of the spreadsheets here!](https://docs.google.com/spreadsheets/d/e/2PACX-1vQXu3XEV_6LwiIKBBGe7yLibX8Np6Uud8U3TJmXO-_bpWvDfx8slS3pM8W0kmvMhrkH5313yMxmiKO5/pubhtml#)
+
+The spreadsheet is used to hold data in a confidential manner whilst also aiding the presentation of important information
+for viewing as well as future implications of business analysation/ monitoring.
+
+The inventory holds values for registration, make, model, price and an optional value for a deposit. The add inventory 
+functions runs the user inputs through input validation before adding them to the selected spreadsheet as a categorised
+list.
+
+Similarly, the register vehicle sale function checks for the registration the user enters and if valid, will remove that
+vehicle from the inventory spreadsheet and into the sales spreadsheet. The edit function also checks an inputted registration
+and allows the user to edit options such as pricing and deposits held.
+
+[Back to Table of contents](#table-of-contents)
+
+___
+# Technologies Used
+
+For this application, In utilised the following six imported libraries: -
+
+### ***Gspread:***
+  * GSpread is a python library I used to access external google sheets for the purpose of data management and manipulation.
+
+### ***Google auth:***
+  * Google auth is used to authorise the program to securely access the data and have the necessary permissions to do so,
+  without making the application's data available to the public for anybody to manipulate/edit.
+
+### ***os:***
+  * Used in line with a cls/clear command to clear the command line interface when the application is closed by the user.
+
+### ***Pyfiglet:***
+  * Pyfiglet is a python library which was used to utilise a funky ASCII font for the application home screen.
+
+### ***Simple_term_menu:***
+  * I imported the Simple_term_menu library to implement functional and iterable main menu/ side-menu options so that the user
+   could navigate by using both arrow keys as well as by pressing the appropriate keyboard shortcut.
+
+### ***Tabulate:***
+  * Tabulate is a python library I used to display the present state of inventory/sales data to the user. It presents the
+   data in a more easily understandable way than just printing a list of lists.
+
+[Back to Table of contents](#table-of-contents)
+
+___
+# Testing
+
+## Functionality testing:
+
+I extensively tested the entirety of the application by trying to find a way to input unrealistic or false inputs. As a result
+of this I have created, what I believe to be, a thorough user input validation system that allows nothing but the necessary
+components for completing the requested process for the user/ business user.
+
+This meant that I was testing the code I was writing thoroughly at every small incrementation of the developed product.
+This includes ensuring that the user can always cancel operations if they made a mistake and that the application runs in a
+conventional and familiar way for new and returning users without exception.
+
+## Bugs Encountered During Development
+
+### Data presentation:
+  * Information was being presented to the user in a way that was easy to understand for fellow developers but not new users/
+  people that could be solely business owners and employees.
+  * This was a mistake made by me and it only came to my attention in the final stages of development.
+  * To fix this I used the tabulate library which I used to display all data in an appealing and easily understandable way.
+
+### Inventory duplication:
+  * The add_inventory() function was working great regardless of something I overlooked... inventory duplication.
+  * The function didn't check if that vehicle already exists in the inventory data so could be easily duplicated which 
+  would result in errors with selling and managing stock/ data.
+  * To fix this I added functionality that the function will check if the registration of the vehicle already exists and 
+  will only continue if it's not present in the data already.
+
+### Deposit checking:
+  * Similarly to the inventory duplication bug/error. The application would overwrite an existing deposit if the user
+  chose to add a deposit to an inventory item that already has a deposit taken for it.
+  * Even though the data presented when the registration is checked would reveal all the vehicle data, including if there
+  was a deposit existing, this wasn't sufficient.
+  * I amended this bug so that when adding a deposit, the operation is cancelled if an existing deposit is present.
+
+## Code Validation
+
+In order to ensure the code used to produce this CLI application was valid and of good practices, I ran [PEP8 Validator](http://pep8online.com/)
+to validate my code.
+
+The code validator returned that there were no errors to be found. See results below:
+
+[PEP8 Validation Results](./images/automated-autos-pep8.jpg)
+
+[Back to Table of contents](#table-of-contents)
+
+___
+# Deployment
+
+This project was made using the specialised Code Institute template that presents the CLI in the web browser. As a result of this
+my guide to deploying the application are in line with this. The steps are as follows:
+
+1) Fork or clone this github repository.
+
+2) Install the requirements listed in requirements.txt using the terminal command "pip3 install -r requirements.txt".
+
+3) Log-in to [Heroku](https://www.heroku.com) or create an account, then choose the "Create App" option.
+
+4) After appropriately naming your application, you'll be brought to the "Deploy" menu.
+
+5) From here, navigate to the "Settings" tab and go to the "Configer Vars" section.
+
+6) Click the button labelled "Reveal Config Vars" and enter the "key" as port, the "value" as 8000 and click the "add" button.
+
+7) Here so that the deployed application has the permissions to manage and manipulate the spradsheets, add your credentials file as
+the "key" and the contents as the "value"
+
+7) Scroll down to the buildpacks section of the settings page and click the button labeled "Add Buildpack", choose "Python," and click "Save Changes".
+Repeat this step and add "Node.js". **IMPORTANT** It must be in this order with Python visibly above Node.js for the application to work.
+
+8) Navigate back to the "Deploy" page and select "Github" as the deployment method.
+
+9) From here, connect to your Github account and find the repository your project is.
+
+10) Now you can enable automatic deploys or manual deploys and then when you have decided, your application has been deployed.
+
+[Back to Table of contents](#table-of-contents)
+
+
+
+
