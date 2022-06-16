@@ -357,13 +357,16 @@ My use of python libraries is credited from the following:
 
 ***GSpread:***
 * The love-sandwiches project I completed with Code Institute.
-* Official GSpread documentation found [here](https://docs.gspread.org/en/v5.4.0/index.html)
+* Official GSpread documentation found [here](https://docs.gspread.org/en/v5.4.0/index.html).
+
+***Pyfiglet***
+* GeeksForGeeks article on how to use the library found [here](https://www.geeksforgeeks.org/python-ascii-art-using-pyfiglet-module/).
 
 ***Tabulate***
-* Official Tabulate documentation found [here](https://pypi.org/project/tabulate/)
+* Official Tabulate documentation found [here](https://pypi.org/project/tabulate/).
 
 ***Simple_term_menu***
-* Official simple_term_menu documentation found [here](https://pypi.org/project/simple-term-menu/)
+* Official simple_term_menu documentation found [here](https://pypi.org/project/simple-term-menu/).
 
 [Back to Table of contents](#table-of-contents)
 
