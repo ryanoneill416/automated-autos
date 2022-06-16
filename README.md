@@ -2,7 +2,7 @@
 
 ## Data-Centric Frontend Development Milestone Project.
 
-![Responsiveness](./images/automated_autos.webp)
+![Application Home](./images/automated-autos.jpg)
 
 Welcome to Automated Auto Dealer! An inventory management tool for car dealerships to manage incoming inventory and
 and outgoing sales.
@@ -100,7 +100,7 @@ the user wishes to exit the program.
 It uses ASCII font to display an application title. As well as this, it is accompanied by a subheading that
 describes the purpose of the application as well as a cheeky accreditation for the creator ;)
 
-![Automated Auto Dealer Homepage](./images/automated-autos-home.webp)
+![Automated Auto Dealer Homepage](./images/automated-autos-home.jpg)
 
 ## Main menu
 
@@ -267,6 +267,10 @@ For this application, In utilised the following six imported libraries: -
   * Tabulate is a python library I used to display the present state of inventory/sales data to the user. It presents the
    data in a more easily understandable way than just printing a list of lists.
 
+### ***Colorama:***
+  * Colorama was used mainly so that failed input validation messages will be displayed in red for ease of understanding a problem has occured/ the operation is cancelled
+  * I also used it to give the application a cyan aesthetic.
+
 [Back to Table of contents](#table-of-contents)
 
 ___
@@ -311,7 +315,7 @@ to validate my code.
 
 The code validator returned that there were no errors to be found. See results below:
 
-[PEP8 Validation Results](./images/automated-autos-pep8.jpg)
+![PEP8 Validation Results](./images/automated-autos-pep8.jpg)
 
 [Back to Table of contents](#table-of-contents)
 
@@ -364,6 +368,9 @@ My use of python libraries is credited from the following:
 
 ***Tabulate***
 * Official Tabulate documentation found [here](https://pypi.org/project/tabulate/).
+
+***Colorama***
+* GeekForGeeks article on how to use colorama in python found [here](https://www.geeksforgeeks.org/print-colors-python-terminal/).
 
 ***Simple_term_menu***
 * Official simple_term_menu documentation found [here](https://pypi.org/project/simple-term-menu/).
